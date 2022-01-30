@@ -1,2 +1,19 @@
-# Algorithm_C-
-Leet code
+# Algorithm_C++
+
+## 목표
+알고리즘 문제를 해결하여 
+* 문제해결 능력과 
+* 기본적인 자료구조, 알고리즘을 익히고
+* 코딩테스트를 준비합니다.
+
+## 문제
+* Leet Code
+* Programmers
+* 백준
+
+## 언어
+* C++
+* Python
+
+## 포맷
+* 파일명: 문제명 
