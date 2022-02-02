@@ -7,7 +7,7 @@
 
 using namespace std;
 
-vector<int> solution(vector<string> id_list, vector<string> report, int k) {
+vector<int> solution(vector<string> id_list, vector<string> report, int k_stop) {
     vector<int> answer;
     answer.assign(id_list.size(), 0);
     // stop_list : 신고당한 횟수
@@ -36,28 +36,59 @@ vector<int> solution(vector<string> id_list, vector<string> report, int k) {
         report_list[idx].push_back(users.back());
         
         // 신고당한 횟수 저장
-        vector<string>::iterator iter2 = find(id_list.begin(), id_list.end(), users.back());
-        int idx2 = distance(id_list.begin(), iter2);
-        stop_list[idx2]++;
+        // vector<string>::iterator iter2 = find(id_list.begin(), id_list.end(), users.back());
+        // int idx2 = distance(id_list.begin(), iter2);
+        // stop_list[idx2]++;
     }
-
+/*
+    cout << "----------- 1 -----------" << endl;
+    for(int i = 0; i < report_list.size(); i++) {
+        cout << "----------- i: " << i << "-----------" << endl;
+        for(int j = 0; j < report_list[i].size(); j++) 
+            cout << report_list[i].at(j) << endl;
+    
+        cout << "-------------------------" << endl;
+    }
+*/
     // sort, remove duplicate
     for(int i; i < report_list.size(); i++) {
         sort(report_list[i].begin(), report_list[i].end());
         report_list[i].erase(unique(report_list[i].begin(), report_list[i].end()), report_list[i].end());
+
+        for(int j = 0; j < report_list[i].size(); j++) {
+            vector<string>::iterator iter2 = find(id_list.begin(), id_list.end(), report_list[i].at(j));
+            int idx2 = distance(id_list.begin(), iter2);
+            stop_list[idx2]++;
+        }
+    }
+/*
+    cout << "----------- 2 -----------" << endl;
+    for(int i = 0; i < report_list.size(); i++) {
+        cout << "----------- i: " << i << "-----------" << endl;
+        for(int j = 0; j < report_list[i].size(); j++) 
+            cout << report_list[i].at(j) << endl;
+    
+        cout << "-------------------------" << endl;
     }
 
+    cout << "-------stop list------" << endl;
+    for(int i = 0; i < stop_list.size(); i++)
+        cout << stop_list[i] << endl;
+    cout << "-------------------------" << endl << endl;
+*/
     // stop_list 체크해서 k보다 큰 index에 해당하는 id가 들어있는 것 
     for(int i = 0; i < stop_list.size(); i++) {
-        if (k <= stop_list[i]) {
+        if (k_stop <= stop_list[i]) {
             string stop_user = id_list[i];
             // report_list 돌아가면서 찾아서 찾으면 answer++ 해주기
             for(int j = 0; j < report_list.size(); j++) {
                 for(int k = 0; k < report_list[j].size(); k++) {
                     // cout << report_list[j][k] << endl;
                     // cout << stop_user.compare(report_list[j][k]) << endl;
-                    if (stop_user.compare(report_list[j][k]) == 0)
+                    if (stop_user.compare(report_list[j][k]) == 0) {
+                        // cout << "stopuser: " << stop_user << ", report_list[j][k]: " << report_list[j][k] << endl;
                         answer[j]++;
+                    }
                 }
             }
         }
@@ -89,30 +120,32 @@ vector<int> solution(vector<string> id_list, vector<string> report, int k) {
 int main() {
 
     vector<string> id_list;
-    /*
+    
     id_list.push_back("muzi");
     id_list.push_back("frodo");
     id_list.push_back("apeach");
     id_list.push_back("neo");
-    */
+    /*
     id_list.push_back("con");
     id_list.push_back("ryan");
-
+*/
     vector<string> report;
-    /*
+  
     report.push_back("muzi frodo");
     report.push_back("apeach frodo");
     report.push_back("frodo neo");
     report.push_back("muzi neo");
     report.push_back("apeach muzi");
+     /* 
+    report.push_back("ryan con");
+    report.push_back("ryan con");
+    report.push_back("ryan con");
+    report.push_back("ryan con");
     */
-    report.push_back("ryan con");
-    report.push_back("ryan con");
-    report.push_back("ryan con");
-    report.push_back("ryan con");
-    int k = 3;
+    int k = 2;
 
     solution(id_list, report, k);
     
     return 0;
 }
+
