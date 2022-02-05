@@ -65,3 +65,4 @@ int main() {
 
     return 0;
 }
+// 다른 풀이는 |=, strchr(), empty, erase, begin, pop_back, back, substr 등을 썼음..
