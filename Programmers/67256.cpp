@@ -3,36 +3,66 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
-
 using namespace std;
+
 
 string solution(vector<int> numbers, string hand) {
     string answer = "";
 
-    int prev_left = -1, prev_right = -1;
+
+    vector< pair<int, int> > keypad;
+    // int prev_left = -1, prev_right = -1;
+    pair<int, int> prev_left, prev_right;
     // ------------ 2 ----------------
 
     // 배열에 집어넣기
+    
+    int k = 0;
+    // keypad.assign(12, 0);
+    for(int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+            // keypad[i][j] = k;
+            keypad.push_back(make_pair(i, j));
+            k++;
+        }
+    }
+
     // index 찾아서 
     for(int i = 0; i < numbers.size(); i++) {
         if (numbers[i] == 1 || numbers[i] == 4 || numbers[i] == 7) {
             // 1, 4, 7 은 왼손
             // 넣은 게 L, R 여부에 따라 이전 것 변경해서 넣어주기
             answer += "L";
-            prev_left = numbers[i];
+            prev_left = keypad[numbers[i] - 1]; // numbers[i];
         } else if (numbers[i] == 3 || numbers[i] == 6 || numbers[i] == 9) {
             // 3, 6, 9 는 오른손
             // 넣은 게 L, R 여부에 따라 이전 것 변경해서 넣어주기
             answer += "R";
-            prev_right = numbers[i];
+            prev_right = keypad[numbers[i] - 1]; // numbers[i];
         } else {
             // 2, 5, 8, 0
             int dis_left, dis_right;
+            
+            // 거리 구하기
+            // 받은 numbers[i] index 구하고, 대각선 이동은 안되니까 제외..
+            // prev_left, prev_right 의 index 구하고,
+
+            // 거리가 같은 경우 hand 검사, 더 가까운 엄지 사용
+            if((dis_left == dis_right && hand == "left") || 
+                dis_left < dis_right) {
+                answer += "L";
+                // prev_left = numbers[i];
+            } else if ((dis_left == dis_right && hand == "right") || 
+                dis_left > dis_right) {
+                answer += "R";
+                // prev_right = numbers[i];
+            }
+            cout << "current answer: " << answer << endl;
+            cout << "------------------------------------------" << endl;
         }
     }
-
-
-    /*
+    
+   /* 
     // ------------ 1 -----------------
     int prev_left = -1, prev_right = -1;
     vector<int> prime3;
@@ -95,14 +125,30 @@ string solution(vector<int> numbers, string hand) {
             dis_right = abs(dis_right);
             cout << "dis_left : " << dis_left << ", dis_right : " << dis_right << endl;
             // 거리가 같은 경우 hand 검사, 더 가까운 엄지 사용
+            // 대각선 제외하기.
+            bool left_tri = false;
+            bool right_tri = false;
+            left_tri = (dis_left == 4 || dis_left == 2) ? true : false;
+            right_tri = (dis_right == 4 || dis_right == 2) ? true : false;
+
             if((dis_left == dis_right && hand == "left") || 
                 dis_left < dis_right) {
-                answer += "L";
-                prev_left = numbers[i];
+                if (!left_tri) {
+                    answer += "L";
+                    prev_left = numbers[i];
+                } else {
+                    answer += "R";
+                    prev_right = numbers[i];
+                }
             } else if ((dis_left == dis_right && hand == "right") || 
                 dis_left > dis_right) {
-                answer += "R";
-                prev_right = numbers[i];
+                if (!right_tri) {
+                    answer += "R";
+                    prev_right = numbers[i];
+                } else {
+                    answer += "L";
+                    prev_left = numbers[i];
+                }
             }
             cout << "current answer: " << answer << endl;
             cout << "------------------------------------------" << endl;
@@ -114,7 +160,7 @@ string solution(vector<int> numbers, string hand) {
 
 int main() {
 
-    string hand = "right";
+    string hand = "left";
     vector<int> numbers;    
     // [1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5]
     /*
@@ -129,7 +175,7 @@ int main() {
     numbers.push_back(5);
     numbers.push_back(9);
     numbers.push_back(5);
-
+*/
     // [7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2]
     numbers.push_back(7);
     numbers.push_back(0);
@@ -142,7 +188,7 @@ int main() {
     numbers.push_back(7);
     numbers.push_back(6);
     numbers.push_back(2);
-*/
+/*
     // [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     numbers.push_back(1);
     numbers.push_back(2);
@@ -154,7 +200,7 @@ int main() {
     numbers.push_back(8);
     numbers.push_back(9);
     numbers.push_back(0);
-
+*/
     solution(numbers, hand);
     
     return 0;
