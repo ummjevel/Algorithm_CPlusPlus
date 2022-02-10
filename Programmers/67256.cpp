@@ -9,14 +9,12 @@ using namespace std;
 string solution(vector<int> numbers, string hand) {
     string answer = "";
 
-
     vector< pair<int, int> > keypad;
     // int prev_left = -1, prev_right = -1;
     pair<int, int> prev_left, prev_right;
-    // ------------ 2 ----------------
 
+    // ------------ 2 ----------------
     // 배열에 집어넣기
-    
     int k = 0;
     // keypad.assign(12, 0);
     for(int i = 0; i < 4; i++) {
@@ -26,6 +24,9 @@ string solution(vector<int> numbers, string hand) {
             k++;
         }
     }
+
+    prev_left = make_pair(3, 0);
+    prev_right = make_pair(3, 2);
 
     // index 찾아서 
     for(int i = 0; i < numbers.size(); i++) {
@@ -41,27 +42,38 @@ string solution(vector<int> numbers, string hand) {
             prev_right = keypad[numbers[i] - 1]; // numbers[i];
         } else {
             // 2, 5, 8, 0
-            int dis_left, dis_right;
-            
-            // 거리 구하기
-            // 받은 numbers[i] index 구하고, 대각선 이동은 안되니까 제외..
-            // prev_left, prev_right 의 index 구하고,
+            int dis_left = 0, dis_right = 0;
+            if (numbers[i] == 0) {
+                numbers[i] = 11;
+            }
 
+            // 거리 구하기
+            // 배열의 i, j 거리 차이로 구하기!
+            // numbers[i]의 keypad 번호 확인
+            dis_left = abs(keypad[numbers[i] - 1].first - prev_left.first) + abs(keypad[numbers[i] - 1].second - prev_left.second);
+            dis_right = abs(keypad[numbers[i] - 1].first - prev_right.first) + abs(keypad[numbers[i] - 1].second - prev_right.second);
+            
+            cout << "numbers[i] : " << numbers[i] << ", keypad : (" << keypad[numbers[i] - 1].first << ", " << keypad[numbers[i] - 1].second << ")" << endl;
+            cout << "prev_left : (" << prev_left.first << ", " << prev_left.second << "),  prev_right : (" << prev_right.first << ", " << prev_right.second << ")" << endl;
+            
             // 거리가 같은 경우 hand 검사, 더 가까운 엄지 사용
             if((dis_left == dis_right && hand == "left") || 
                 dis_left < dis_right) {
                 answer += "L";
-                // prev_left = numbers[i];
+                prev_left = keypad[numbers[i] - 1]; // numbers[i];
             } else if ((dis_left == dis_right && hand == "right") || 
                 dis_left > dis_right) {
                 answer += "R";
-                // prev_right = numbers[i];
+                prev_right = keypad[numbers[i] - 1]; // numbers[i];
+            }
+            if (numbers[i] == 11) {
+                numbers[i] = 0;
             }
             cout << "current answer: " << answer << endl;
             cout << "------------------------------------------" << endl;
         }
     }
-    
+    cout << "final answer: " << answer << endl;
    /* 
     // ------------ 1 -----------------
     int prev_left = -1, prev_right = -1;
@@ -160,10 +172,10 @@ string solution(vector<int> numbers, string hand) {
 
 int main() {
 
-    string hand = "left";
+    string hand = "right";
     vector<int> numbers;    
     // [1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5]
-    /*
+   /* 
     numbers.push_back(1);
     numbers.push_back(3);
     numbers.push_back(4);
@@ -175,7 +187,8 @@ int main() {
     numbers.push_back(5);
     numbers.push_back(9);
     numbers.push_back(5);
-*/
+    // LRLLLRLLRRL
+
     // [7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2]
     numbers.push_back(7);
     numbers.push_back(0);
@@ -188,7 +201,8 @@ int main() {
     numbers.push_back(7);
     numbers.push_back(6);
     numbers.push_back(2);
-/*
+    // LRLLRRLLLRR
+*/
     // [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     numbers.push_back(1);
     numbers.push_back(2);
@@ -200,7 +214,8 @@ int main() {
     numbers.push_back(8);
     numbers.push_back(9);
     numbers.push_back(0);
-*/
+    // LLRLLRLLRL
+
     solution(numbers, hand);
     
     return 0;
