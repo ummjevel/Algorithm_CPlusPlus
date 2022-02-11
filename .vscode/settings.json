@@ -8,6 +8,7 @@
         "algorithm": "cpp",
         "iterator": "cpp",
         "utility": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "__tuple": "cpp"
     }
 }
