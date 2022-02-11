@@ -2,6 +2,12 @@
     "files.associations": {
         "iostream": "cpp",
         "vector": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "utility": "cpp",
+        "unordered_map": "cpp"
     }
 }
