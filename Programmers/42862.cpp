@@ -7,10 +7,74 @@
 using namespace std;
 
 int solution(int n, vector<int> lost, vector<int> reserve) {
+
+    // 4 - 95% 5
     int answer = n;
-    int lost_cnt = lost.size();
+
+    // 저장은 hash로
+    unordered_map<int, int> hash;
+
+    sort(reserve.begin(), reserve.end());
+    sort(lost.begin(), lost.end());
+
+    // 다 넣는다
+    for(int i = n; i > 0; i--) {
+        hash.insert(make_pair(i, 0));
+    }
+
+    // reserve 개수만큼 추가
+    for(int i = 0; i < reserve.size(); i++) {
+        auto it = hash.find(reserve[i]);
+        if (it != hash.end()) {
+            it->second++;
+        }
+    }
+    // lost 개수만큼 빼기 -> 같은 것 빼주기
+    for(int i = 0; i < lost.size(); i++) {
+        /*
+        auto it = hash.find(lost[i]);
+        if (it != hash.end()) {
+            it->second--;
+        }*/
+        if (hash[lost[i]] > 0) {
+            hash[lost[i]]--;
+        } else if (hash[lost[i] - 1] > 0) {
+            hash[lost[i] - 1]--;
+        } else if (hash[lost[i] + 1] > 0) {
+            hash[lost[i] + 1]--;
+        } else {
+            hash[lost[i]]--;
+        }
+    }
+/*
+    // -1 빼주기
+    for(int i = 0; i < lost.size(); i++) {
+        cout << "------- hash[lost[i]]----- " <<  hash[lost[i]] << endl;
+        
+        if (hash[lost[i] - 1] > 0) {
+            hash[lost[i] - 1]--;
+            hash[lost[i]]++;
+            cout << "hash[lost[i] - 1]--;" << endl;
+        } else if(hash[lost[i] + 1] > 0) {
+            hash[lost[i] + 1]--;
+            hash[lost[i]]++;
+            cout << "hash[lost[i] + 1]--;" << endl;
+        }
+    }
+*/
+
+    // 음수 개수만 세면 됨!
+    for(int i = 0; i < hash.size(); i++) {
+        if(hash[i] < 0)
+            answer -= hash[i];
+    }
+    for(auto it = hash.begin() ; it != hash.end(); it++) {
+        cout << it->first << ", " << it->second << endl;
+    }
+
     // 3 
     /*
+    int lost_cnt = lost.size();
     sort(lost.begin(), lost.end());
     sort(reserve.begin(), reserve.end());
     
@@ -33,7 +97,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     answer = n - lost.size();
 */
     // 2. hash 로도 풀어봄. 85%. 1, 6, 7
-    
+    /*
     sort(lost.begin(), lost.end());
     sort(reserve.begin(), reserve.end());
     unordered_map<int, int> hash;
@@ -51,12 +115,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
         auto it = hash.find(lost[i]);
         if (it != hash.end()) {
             it->second -= 1;
-            /*
-            if (it->second == 0) {
-                lost.erase(remove(lost.begin(), lost.end(), lost[i]), lost.end());
-                reserve.erase(remove(reserve.begin(), reserve.end(), lost[i]), reserve.end());
-            }
-            */
+            lost_cnt--;
         }
     }
     for(auto it = hash.begin() ; it != hash.end(); it++) {
@@ -97,7 +156,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     } 
     cout << "------------------------" << endl;
     answer = n - lost_cnt;
-
+*/
     /*
     sort(lost.begin(), lost.end());
     sort(reserve.begin(), reserve.end());
@@ -147,9 +206,9 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
 }
 
 int main() {
-    int n = 3; // 5;
-    vector<int> lost = {1,2,3}; // {2, 4}; // {2, 4};
-    vector<int> reserve = {1,2,3};// {3}; // {1, 3, 5};
+    int n = 5; // 5;
+    vector<int> lost = {2, 4}; // {2, 4}; // {2, 4};
+    vector<int> reserve = {1, 3, 5};// {3}; // {1, 3, 5};
 
     // 6 [2,3,5] [1,2,4,6] 5
     // 9, [5,6,8,1,2], [2,3,1,4,8,9 ]
