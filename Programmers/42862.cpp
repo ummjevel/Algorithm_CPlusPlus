@@ -31,11 +31,11 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     }
     // lost 개수만큼 빼기 -> 같은 것 빼주기
     for(int i = 0; i < lost.size(); i++) {
-        /*
+        
         auto it = hash.find(lost[i]);
         if (it != hash.end()) {
             it->second--;
-        }*/
+        }/*
         if (hash[lost[i]] > 0) {
             hash[lost[i]]--;
         } else if (hash[lost[i] - 1] > 0) {
@@ -44,9 +44,9 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
             hash[lost[i] + 1]--;
         } else {
             hash[lost[i]]--;
-        }
+        }*/
     }
-/*
+
     // -1 빼주기
     for(int i = 0; i < lost.size(); i++) {
         cout << "------- hash[lost[i]]----- " <<  hash[lost[i]] << endl;
@@ -61,7 +61,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
             cout << "hash[lost[i] + 1]--;" << endl;
         }
     }
-*/
+
 
     // 음수 개수만 세면 됨!
     for(int i = 0; i < hash.size(); i++) {
