@@ -8,7 +8,62 @@ using namespace std;
 
 int solution(int n, vector<int> lost, vector<int> reserve) {
 
+    for(int i = 0; i < lost.size(); i++){
+        for(int j = 0; j < reserve.size(); j++){
+            if(lost[i] == reserve[j]){
+                lost.erase(lost.begin() + i);
+                reserve.erase(reserve.begin() + j);
+                i = -1;
+                break;
+            }
+        }
+    }
+
+    int answer = n - lost.size();
+
+    sort(lost.begin(), lost.end());
+    sort(reserve.begin(), reserve.end());
+    for(int i = 0; i < lost.size(); i++){
+        for(int j = 0; j < reserve.size(); j++){
+            if(lost[i] - 1 == reserve[j] || lost[i] + 1 == reserve[j]){
+                answer++;
+                reserve.erase(reserve.begin() + j);
+                break;
+            }
+        }
+    }
+
+    /*
+    int answer = n;
+    // 5 85% 12,13,14
+    
+    vector<int> v;
+    v.assign(n+1, 1);
+
+    for(int i = 0; i < reserve.size(); i++) {
+        v[reserve[i]]++;
+    }
+    for(int i = 0; i < lost.size(); i++) {
+        if(v[lost[i]] > 1) {
+            v[lost[i]]--;
+        } else {
+            if (lost[i] > 0 && v[lost[i] - 1] > 1) {
+                v[lost[i] - 1]--;
+            } else if (lost[i] < n && v[lost[i] + 1] > 1) {
+                v[lost[i] + 1]--;
+            } else {
+                v[lost[i]]--;
+            }
+        }
+    }
+
+    for(int i = 1; i < v.size(); i++) {
+        if (v[i] < 1) answer--;
+    }
+*/
+
     // 4 - 95% 5
+    /*
     int answer = n;
 
     // 저장은 hash로
@@ -19,7 +74,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
 
     // 다 넣는다
     for(int i = n; i > 0; i--) {
-        hash.insert(make_pair(i, 0));
+        hash.insert(make_pair(i, 1));
     }
 
     // reserve 개수만큼 추가
@@ -35,7 +90,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
         auto it = hash.find(lost[i]);
         if (it != hash.end()) {
             it->second--;
-        }/*
+        }
         if (hash[lost[i]] > 0) {
             hash[lost[i]]--;
         } else if (hash[lost[i] - 1] > 0) {
@@ -44,7 +99,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
             hash[lost[i] + 1]--;
         } else {
             hash[lost[i]]--;
-        }*/
+        }
     }
 
     // -1 빼주기
@@ -71,6 +126,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     for(auto it = hash.begin() ; it != hash.end(); it++) {
         cout << it->first << ", " << it->second << endl;
     }
+    */
 
     // 3 
     /*
@@ -200,8 +256,8 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
             answer--;
         }
         lost.pop_back();
-    }
-    */
+    } */
+    
     return answer;
 }
 
