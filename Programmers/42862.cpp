@@ -90,6 +90,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
         auto it = hash.find(lost[i]);
         if (it != hash.end()) {
             it->second--;
+            // continue 추가해버리면?
         }
         if (hash[lost[i]] > 0) {
             hash[lost[i]]--;
