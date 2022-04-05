@@ -11,8 +11,12 @@ int solution(vector<int> d, int budget) {
 
     sort(d.begin(), d.end());
 
-    for(int i = 0 ;i < d.size(); i++)
-        cout << d[i] << endl;
+    for(int i = 0 ;i < d.size(); i++) {
+        budget -= d[i];
+        if (budget < 0)
+            break;
+        answer++;
+    }
 
     return answer;
 }
