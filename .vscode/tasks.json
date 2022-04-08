@@ -2,9 +2,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: clang++ build active file",
-			"command": "/usr/bin/clang++",
+			"type": "shell",
+			"label": "C/C++: g++ build active file",
+			"command": "/usr/bin/g++",
 			"args": [
 				"-std=c++17",
 				"-stdlib=libc++",
@@ -12,7 +12,9 @@
 				"-g",
 				"${file}",
 				"-o",
-				"${fileDirname}/${fileBasenameNoExtension}.o"
+				"${fileDirname}/${fileBasenameNoExtension}.out",
+				"&&",
+				"${fileDirname}/${fileBasenameNoExtension}.out"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -24,7 +26,16 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: /usr/bin/clang++"
-		}
+			
+		},
+		{
+			"label": "exec",
+			"type": "shell",
+			"command": "${fileDirname}/${fileBasenameNoExtension}.out",
+			"group": {
+			  "kind": "build",
+			  "isDefault": true
+			}
+		  }
 	]
 }
