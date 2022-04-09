@@ -44,3 +44,39 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     
     return answer;
 }
+
+// 2번째 풀이.
+// #include <string>
+// #include <vector>
+// #include <cmath>
+
+// using namespace std;
+
+// vector<int> solution(vector<int> progresses, vector<int> speeds) {
+//     vector<int> answer;
+    
+//     // 각자 필요한 날 수 계산
+//     int i = 0;
+//     int pdays;
+//     while(i < progresses.size()) {
+        
+//         int days = ceil((double)(100 - progresses[i])/speeds[i]);
+//         // (100 - progresses[i])/speeds[i] 로 할 경우 테스트11 통과못함
+//         // (99 - progresses[i])/speeds[i] + 1
+//         // ceil 도 실패. ? 형변환..
+//         // 자기 앞의 날과만 비교해서 더하면 되는 거니까.
+//         if (i == 0) {
+//             pdays = days;
+//             answer.push_back(1);
+//         } else if (pdays < days) {
+//             answer.push_back(1);
+//             pdays = days;
+//         } else if (pdays >= days) {
+//             answer.back()++;
+//         }
+//         i++;
+//     }
+    
+    
+//     return answer;
+// }
