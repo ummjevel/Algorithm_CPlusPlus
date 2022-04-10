@@ -15,18 +15,18 @@ vector<vector<int>> matrix(vector<int> query, vector<vector<int>> matrix) {
     int leftcornerdown = matrix[x1][y2];
     int rightcornerdown = matrix[x2][y2];
 
-    for(int j = y2; j > y1; j--) {
+    for(int j = y2; j > y1; j--) 
         matrix[x1][j] = matrix[x1][j-1];
-    }
-    for(int j = y2; j > y1; j--) {
+    
+    for(int j = y2; j > y1; j--) 
         matrix[x2][j] = matrix[x2][j-1];
-    }
-    for(int j = x2; j > x1; j--) {
+    
+    for(int j = x2; j > x1; j--) 
         matrix[j][y1] = matrix[j-1][y1];
-    }
-    for(int j = x2; j > x1; j--) {
+    
+    for(int j = x2; j > x1; j--) 
         matrix[j][y2] = matrix[j-1][y2];
-    }
+    
 
     return matrix;
 }
