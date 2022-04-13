@@ -1,37 +1,50 @@
 #include <iostream>
 #include <string>
-#include <vector>
+#include <stack>
 
 using namespace std;
 
-
 int solution(string s) {
-    vector<string> v = {"aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"};
-    
-    int i = 0;
-    while(true) {    
-        
-        if(s.length() == 0) {
-            break;
-        } 
-        if(s[i] == s[i + 1]) {
-            cout << s << endl;
-            s.erase(i, 2);
-            i = 0;
-            cout << s << endl;
-        }
-        i++;
+    stack<char> stk;
+    int i = s.size() - 1;
+    while(i >= 0) {
+        if (!stk.empty() && stk.top() == s[i])
+            stk.pop(); 
+        else
+            stk.push(s[i]);
+        i--;
     }
     
-    
-    if(s[0] == s[1]) {
-        cout << "aaaaa" << endl;
-        return 1;
-    } else {
-        cout << s.length() << endl;
-    }
-    return 0;
+    if(stk.empty()) return 1;
+    else return 0;
 }
+
+// 시간초과 나옴. 정확성은 통과.. 스택 이용해야 한다고 함..
+// int solution(string s) {
+//     // vector<string> v = {"aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"};
+   
+//     int i = 0;
+//     while(true) {    
+        
+//         if(s.empty() || i >= s.length()) {
+//             break;
+//         } 
+//         if(s[i] == s[i + 1]) {
+//             cout << s << endl;
+//             s.erase(i, 2);
+//             i = -1;
+//         }
+//         i++;
+//     }
+    
+//     if (s.length() == 0) {
+//         return 1;
+//     } else {
+//         return 0;
+//     }
+    
+//     return 0;
+// }
 
 int main() {
     cout << solution("baabaa") << endl;
