@@ -13,8 +13,18 @@
 				"${file}",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}.out",
+				// "$(pkg-config opencv --libs --cflags opencv)",
 				"&&",
-				"${fileDirname}/${fileBasenameNoExtension}.out"
+				"${fileDirname}/${fileBasenameNoExtension}.out",
+				// "-g",
+                // "-std=c++17",
+                // "${file}",
+                // "-o",
+                // "${fileDirname}/${fileBasenameNoExtension}.out",
+                // "`pkg-config",
+                // "--libs",
+                // "--cflags",
+                // "opencv`"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
