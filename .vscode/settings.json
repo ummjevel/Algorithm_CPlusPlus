@@ -76,6 +76,8 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "set": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "__bits": "cpp",
+        "variant": "cpp"
     }
 }
